@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Care or Don't Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
-    <h1>Care or Don't Care</h1>
+    <nav class="navbar">
+        <div class="navbar-links">
+            <a href="#" class="navbar-link">Home</a>
+            <a href="#" class="navbar-link">Care</a>
+            <a href="#" class="navbar-link">Login</a>
+        </div>
+    </nav>
+    <h1>Topic: Artificial Intelligence</h1>
     <div class="card">
         <div class="card-content">
-            <div class="topic">Topic: Technology</div>
+            <p class="description">Artificial intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think and learn like humans. One prominent application of AI is in the development of Language Models (LLM), such as ChatGPT (Generative Pre-trained Transformer), which are capable of generating human-like text based on the input provided.</p>
         </div>
     </div>
-    <button class="button" id="careButton">Care</button>
-    <button class="button" id="dontCareButton">Don't Care</button>
+    <div class="buttons-container">
+        <button class="button" id="careButton">Care</button>
+        <button class="button" id="dontCareButton">Don't Care</button>
+    </div>
 
     <script>
         document.getElementById('careButton').onclick = function() {
