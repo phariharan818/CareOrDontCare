@@ -21,15 +21,14 @@ const populateFromAPI = async () => {
         // console.log("Response from News API:", response);
 
         const articles = response.articles.map(article => {
-            const titleRegex = /^(.*?)(?: - .*)?$/;
-            const match = titleRegex.exec(article.title);
-            const title = match ? match[1].trim() : article.title;
+            const title = article.title.replace(/ - .*/, '').trim();
             return {
-                title: title,
+                title,
                 description: article.description,
                 url: article.url,
             };
         });
+        
 
         await Topic.insertMany(articles);
         console.log("Articles populated from API successfully.");
