@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import NewsAPI from 'newsapi';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const newsapi = new NewsAPI('877b46ff0ecb4ceeba9ebcd0c04cd669');
 
@@ -32,21 +34,21 @@ const populateFromAPI = async () => {
         
 
         await Topic.insertMany(articles);
-        console.log("Articles populated from API successfully.");
+        console.log("articles populated from API successfully");
     } catch (error) {
-        console.error("Error populating articles from API:", error);
+        console.error("error:", error);
     }
 }
 
 
 const connectDB = async () => {
     try {
-        console.log("Connecting to MongoDB...");
-        await mongoose.connect("mongodb+srv://phariha:phariha@cluster0.vdenqf5.mongodb.net/")
-        console.log("Successfully connected to MongoDB.");
+        console.log("connecting to mongodB")
+        await mongoose.connect(process.env.MONGODB_URI)
+        console.log("successfully connected to mongodb")
         await populateFromAPI();
     } catch (error) {
-        console.error("Error connecting to MongoDB:", error);
+        console.error("error:", error)
     }
 };
 
