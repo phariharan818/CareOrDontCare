@@ -10,10 +10,10 @@ import WebAppAuthProvider from 'msal-node-wrapper'
 
 const authConfig = {
     auth: {
-        clientId: "415cde75-c8b7-4356-9c31-df9562579604",
+        clientId: "d0eca815-3913-4038-9694-884f566c8013",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret: "W.G8Q~fm~vgaFnKACA1KCMlCRxZxeWpgKBwGRcS.",
-        redirectUri: "/redirect" //"localhost:3000/redirect" or "examplesite.me/redirect"
+        clientSecret: "nWa8Q~zZQZXBu_.qlrZUYB4aMBPQF39F8nmKIciC",
+        redirectUri: "/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
     },
     system: {
         loggerOptions: {
@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const oneDay = 1000 * 60 * 60 * 24
 app.use(sessions({
-    secret: "0aba862a-6a5f-4841-9289-c403e125cfc9",
+    secret: "nWa8Q~zZQZXBu_.qlrZUYB4aMBPQF39F8nmKIci",
     saveUninitialized: true,
     cookie: {maxAge: oneDay},
     resave: false
@@ -57,6 +57,7 @@ app.use(sessions({
 
 const authProvider = await WebAppAuthProvider.WebAppAuthProvider.initialize(authConfig);
 app.use(authProvider.authenticate());
+
 
 app.use('/', indexRouter);
 app.use('/care', careRouter);
@@ -71,15 +72,15 @@ app.get('/signin', (req, res, next) => {
 
 app.get( '/signout', (req, res, next) => {
 	return req.authContext.logout({
-		postLogoutRedirectUri: "/",
+		postLogoutRedirectUri: "/", // redirect here after logout
 	})
     (req, res, next);
 });
 
 app.use(authProvider.interactionErrorHandler());
 
-app.listen(3000, () => {
-    console.log("Example app listening at http://localhost:3000")
-})
+// app.listen(3000, () => {
+//     console.log("Example app listening at http://localhost:3000")
+// })
 
 export default app;

@@ -3,7 +3,7 @@ import NewsAPI from 'newsapi';
 import dotenv from 'dotenv'
 dotenv.config()
 
-const newsapi = new NewsAPI('877b46ff0ecb4ceeba9ebcd0c04cd669');
+const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
 
 const topicSchema = new mongoose.Schema({
     title: String,

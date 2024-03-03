@@ -17,6 +17,9 @@
     "msal-node-wrapper": "https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main",
     "newsapi": "^2.4.1"
   },
+  "keywords": [
+    "vercel"
+  ],
   "description": "This is a starter project for Express. It was created with the express project generator and then modified to be a module type (uses imports instead of requires, based on this tutorial), and with VSCode launch settings.",
   "main": "app.js",
   "author": "",

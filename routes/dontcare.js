@@ -1,6 +1,7 @@
 import express from 'express';
 var router = express.Router();
-import { Topic } from '../models.js';
+import {Topic} from '../models.js';
+
 
 
 router.post('/', async (req, res) => {
