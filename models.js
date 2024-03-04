@@ -14,7 +14,16 @@ const topicSchema = new mongoose.Schema({
 
 const Topic = mongoose.model("Topic", topicSchema);
 
-const populateFromAPI = async () => {
+const articleSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    url: String,
+    img: String,
+});
+
+const Article = mongoose.model("Article", articleSchema);
+
+const populateTestArticle = async () => {
     try {
         const response = await newsapi.v2.topHeadlines({
             country: 'us',
@@ -29,6 +38,33 @@ const populateFromAPI = async () => {
                 title,
                 description: article.description,
                 url: article.url,
+                img: article.urlToImage
+            };
+        });
+        
+
+        await Article.insertMany(articles);
+        console.log("articles populated from API successfully");
+    } catch (error) {
+        console.error("error:", error);
+    }
+}
+
+const populateFromAPI = async () => {
+    try {
+        const response = await newsapi.v2.topHeadlines({
+            country: 'us',
+            pageSize: 100,
+        });
+        
+        // console.log("Response from News API:", response);
+
+        const articles = response.articles.map(article => {
+            const title = article.title.replace(/ - .*/, '').trim();
+            return {
+                title,
+                description: article.description,
+                url: article.url
             };
         });
         
@@ -47,9 +83,10 @@ const connectDB = async () => {
         await mongoose.connect(process.env.MONGODB_URI)
         console.log("successfully connected to mongodb")
         await populateFromAPI();
+        await populateTestArticle();
     } catch (error) {
         console.error("error:", error)
     }
 };
 
-export { connectDB, Topic };
+export { connectDB, Topic, Article };

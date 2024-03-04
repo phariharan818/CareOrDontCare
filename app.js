@@ -79,8 +79,8 @@ app.get( '/signout', (req, res, next) => {
 
 app.use(authProvider.interactionErrorHandler());
 
-// app.listen(3000, () => {
-//     console.log("Example app listening at http://localhost:3000")
-// })
+app.listen(3000, () => {
+    console.log("Example app listening at http://localhost:3000")
+})
 
 export default app;
