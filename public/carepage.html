@@ -9,62 +9,21 @@
 </head>
 <body>
 
-<div class="navbar">
-    <div class="navbar-links">
-        <a href="/" class="navbar-link">Home</a>
-        <a href="/care" class="navbar-link">Care</a>
-        <a href="#" class="navbar-link">Login</a>
+    <div class="navbar">
+        <div class="navbar-links">
+            <a href="/" class="navbar-link">Home</a>
+            <a href="/care" class="navbar-link">Care</a>
+            <a href="#" class="navbar-link">Login</a>
+        </div>
     </div>
-</div>
 
-<h1>Care Page</h1>
+    <h1>Care Page</h1>
 
-<div id="careContainer" class="card-container">
-    <!-- Care cards will be dynamically added here -->
-</div>
-
-<script>
-    async function fetchAndDisplayCaredTopics() {
-        try {
-            const response = await fetch('/api/care');
-            const topics = await response.json();
-
-            const careContainer = document.getElementById('careContainer');
-            careContainer.innerHTML = '';
-
-            topics.forEach(topic => {
-                const card = `
-                    <div class="card">
-                        <div class="card-content">
-                            <h2>${topic.title}</h2>
-                            <p class="description">${topic.description}</p>
-                            <a href="${topic.url}" class="button" target="_blank">View Article</a>
-                        </div>
-                    </div>
-                `;
-                careContainer.innerHTML += card;
-            });
-        } catch (error) {
-            console.error('Error fetching cared topics:', error);
-        }
-    }
-
-    async function careForNextTopic(topicId) {
-        try {
-            const response = await fetch(`/api/care/${topicId}`, { method: 'POST' });
-            const nextTopic = await response.json();
-            if (nextTopic) {
-                fetchAndDisplayCaredTopics();
-            } else {
-                console.log('No more uncared topics.');
-            }
-        } catch (error) {
-            console.error('Error caring for next topic:', error);
-        }
-    }
-
-    window.onload = fetchAndDisplayCaredTopics;
-</script>
+    <div id="careContainer" class="card-container">
+        <!-- Care cards will be dynamically added here -->
+    </div>
 
 </body>
+<!-- <script src="javascripts/careChanges.js"></script>  -->
+<!-- add 2 function to index.js: move don't care and move care -->
 </html>

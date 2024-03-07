@@ -15,7 +15,8 @@
     "mongoose": "^8.2.0",
     "morgan": "~1.9.1",
     "msal-node-wrapper": "https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main",
-    "newsapi": "^2.4.1"
+    "newsapi": "^2.4.1",
+    "vercel": "^33.5.3"
   },
   "keywords": [
     "vercel"

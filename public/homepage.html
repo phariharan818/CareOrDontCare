@@ -16,17 +16,79 @@
             <a href="/signout" class="navbar-link">Logout</a>
         </div>
     </nav>
+    <div class="purpose-container">
+        <h2 class="purpose-title">Discover Interesting Articles</h2>
+        <p class="purpose-description">Care or Don't Care is a platform designed to help you discover interesting articles from various sources. Here's how it compares to traditional news browsing:</p>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Care or Don't Care</th>
+                    <th>Traditional News Browsing</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="criteria">Curation</td>
+                    <td>Care or Don't Care offers personalized curation based on your interests and preferences.</td>
+                    <td>Traditional news browsing may lack personalized curation, leading to information overload.</td>
+                </tr>
+                <tr><td colspan="3" class="separator"></td></tr>
+                <tr>
+                    <td class="criteria">Engagement</td>
+                    <td>Care or Don't Care presents articles one at a time, making it easier to engage with each one.</td>
+                    <td>Traditional news browsing may overwhelm users with too many options, leading to decision fatigue.</td>
+                </tr>
+                <tr><td colspan="3" class="separator"></td></tr>
+                <tr>
+                    <td class="criteria">Discoverability</td>
+                    <td>Care or Don't Care offers a diverse selection of articles from various sources, allowing users to discover hidden gems.</td>
+                    <td>Traditional news browsing relies on algorithms that prioritize popular or trending topics, potentially overlooking niche or lesser-known content.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="example-article">
+        <h2 class="example-title">Example Article</h2>
+        <p class="example-description">Here's an example of a randomly generated article. Click the "Care" or "Don't Care" button to see another one!</p>
+    </div>
+    <div class="login-blurb" id="loginBlurb">
+        <p>Note: Please <a href="/signin">login</a> to click "Care" or "Don't Care" and store articles.</p>
+    </div>
+    <div class="arrow-container" style="margin-bottom: -1em;">
+        <a class="arrow-link" style="text-decoration: none; font-weight: normal;">
+          <span class="arrow-down mb-4">&#x2193;</span>
+        </a>
+      </div>
+    
+    
     <h1 id="topicHeading">Topic: Loading...</h1>
     <div class="card">
         <div class="card-content">
-            <p class="description" id="topicDescription">Loading...</p>
+            <p class="description" id="topicDescription">Press a button below to start seeing articles!</p>
         </div>
     </div>
     <div class="buttons-container">
         <button class="button" id="careButton">Care</button>
         <button class="button" id="dontCareButton">Don't Care</button>
     </div>
+    
+    
 
     <script src="javascripts/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/auth');
+                const data = await response.json();
+                const loginBlurb = document.getElementById('loginBlurb');
+                if (data.authenticated) {
+                    loginBlurb.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error checking authentication status:', error);
+            }
+        });
+    </script>
 </body>
 </html>
