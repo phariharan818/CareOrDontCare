@@ -1,30 +1,24 @@
 import express from 'express';
 var router = express.Router();
+import escapeHTML from 'escape-html';
 import { User, Article } from '../models.js';
-import fs from 'fs'
+import fs from 'fs';
 
 
 router.get('/', async (req, res) => {
     try {
         if (req.session.isAuthenticated) {
-            function escapeHTML(text) {
-                return text.replace(/&/g, '&amp;')
-                           .replace(/</g, '&lt;')
-                           .replace(/>/g, '&gt;')
-                           .replace(/"/g, '&quot;')
-                           .replace(/'/g, '&#039;');
-            }
-            console.log('add to database')
+            console.log('add to database');
 
             // get current user
-            let userIn = await User.findOne({name: req.session.account.username});
+            let userIn = await User.findOne({ name: req.session.account.username });
             if (userIn === null) { // user not in database, add them
-                console.log('user not in database, adding them')
-                userIn = await User.create({name: req.session.account.username});
+                console.log('user not in database, adding them');
+                userIn = await User.create({ name: req.session.account.username });
             }
 
             // get a list of all topics the user has seen
-            const allArticles = [...userIn['caredArticles'], ...userIn['notCaredArticles']]
+            const allArticles = [...userIn['caredArticles'], ...userIn['notCaredArticles']];
 
             // send response of topic user has not seen
             const randomArticle = await Article.aggregate([
@@ -32,7 +26,7 @@ router.get('/', async (req, res) => {
                     $match:
                     {
                         archived: false,
-                        _id: { $nin: allArticles}
+                        _id: { $nin: allArticles }
                     },
                 },
                 {
@@ -54,14 +48,7 @@ router.get('/', async (req, res) => {
             homepageHTML = homepageHTML.replace('</body>', `${dynamicContent}</body>`);
             res.send(homepageHTML);
         } else {
-            function escapeHTML(text) {
-                return text.replace(/&/g, '&amp;')
-                           .replace(/</g, '&lt;')
-                           .replace(/>/g, '&gt;')
-                           .replace(/"/g, '&quot;')
-                           .replace(/'/g, '&#039;');
-            }
-            console.error('User not authenticated: display random topic')
+            console.error('User not authenticated: display random topic');
             // unauthenticated user, send random topic
             const randomArticle = await Article.aggregate([
                 {
