@@ -92,23 +92,23 @@ router.get('/', async (req, res) => {
 
             const cared = await Article.find({ _id: { $in: userIn['caredArticles'] } });
 
-            // Generate HTML for cared topics with toggle switches
-            const caredList = cared.map(article => `
-                <div class="card">
-                    ${article.urlToImage ? `<img src="${article.urlToImage}" alt="Article Image" class="article-image">` : ''}
-                    <div class="card-content">
-                        <h2 class="card-title">${article.title}</h2>
-                        <p class="card-description">${article.description}</p>
+            const caredList = cared.map(article => {
+                return `
+                    <div class="card">
+                        <img src="${article.urlToImage}" alt="Article Image" class="article-image">
+                        <div class="card-content">
+                            <h2 class="card-title">${article.title}</h2>
+                            <p class="card-description">${article.description}</p>
+                        </div>
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" checked> <!-- Default to checked -->
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="toggle-container">
-                        <label class="switch">
-                            <input type="checkbox" checked> <!-- Default to checked -->
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-            `).join('');
-
+                `;
+            }).join('');
 
             // Read carepage.html and replace the placeholder with cared topics
             let carepageHTML = await fs.promises.readFile('public/carepage.html', 'utf-8');
