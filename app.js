@@ -10,10 +10,10 @@ import WebAppAuthProvider from 'msal-node-wrapper'
 
 const authConfig = {
     auth: {
-        clientId: "d0eca815-3913-4038-9694-884f566c8013",
+        clientId: "37212b3b-f488-4b1a-b898-ef001135b7c9",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret: "nWa8Q~zZQZXBu_.qlrZUYB4aMBPQF39F8nmKIciC",
-        redirectUri: "/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
+        clientSecret: "2SI8Q~kfgkhXc3-h.21XS5dNGS6MpkP9KiexRb-c",
+        redirectUri: "http://localhost:3000/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
     },
     system: {
         loggerOptions: {
@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const oneDay = 1000 * 60 * 60 * 24
 app.use(sessions({
-    secret: "nWa8Q~zZQZXBu_.qlrZUYB4aMBPQF39F8nmKIci",
+    secret: "2SI8Q~kfgkhXc3-h.21XS5dNGS6MpkP9KiexRb-c",
     saveUninitialized: true,
     cookie: {maxAge: oneDay},
     resave: false

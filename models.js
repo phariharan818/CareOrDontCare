@@ -14,6 +14,71 @@ const topicSchema = new mongoose.Schema({
 
 const Topic = mongoose.model("Topic", topicSchema);
 
+const articleSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    url: String,
+    made: { type: Date, default: Date.now },
+    archived: { type: Boolean, default: false }
+});
+
+const Article = mongoose.model("Article", articleSchema);
+
+const userSchema = new mongoose.Schema({
+    name: String,
+    caredArticles: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Article' 
+    }], 
+    notCaredArticles: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Article' 
+    }]
+});
+const User = mongoose.model("User", userSchema);
+
+const populateArticlesFromTopics = async () => {
+    try {
+        const a = await Article.find({}); // get article titles
+        const aTitles = a.map(article => article.title);
+
+        const topics = await Topic.find({}).exec(); // query for all topics
+        let articles = topics.map(topic => { // re-set the 3 fields that match, leaving archived as false.
+            if(aTitles.includes(topic.title)) {
+                return null;
+            } else {
+                const g = {
+                    title: topic.title,
+                    description: topic.description,
+                    url: topic.url,
+                };
+                aTitles.push(topic.title);
+                return g;
+            }
+        });
+        articles = articles.filter(article => article !== null);
+        await Article.insertMany(articles); // save the articles to the database
+        console.log("articles populated from topics successfully");
+    } catch (error) {
+        console.error("error:", error);
+    }
+    // try {
+    //     const a = await Article.find({});
+    //     const articles = a.map(topic => { // re-set the 3 fields that match, leaving archived as false.
+    //         const g = {
+    //             title: topic.title,
+    //             description: topic.description,
+    //             url: topic.url,
+    //         };
+    //         return g;
+    //     });
+    //     await Article.insertMany(articles); // save the articles to the database
+    //     console.log("articles populated from topics successfully");
+    // } catch (error) {
+    //     console.error("error:", error);
+    // }
+};
+
 const populateFromAPI = async () => {
     try {
         const response = await newsapi.v2.topHeadlines({
@@ -28,7 +93,7 @@ const populateFromAPI = async () => {
             return {
                 title,
                 description: article.description,
-                url: article.url,
+                url: article.url
             };
         });
         
@@ -46,10 +111,11 @@ const connectDB = async () => {
         console.log("connecting to mongodB")
         await mongoose.connect(process.env.MONGODB_URI)
         console.log("successfully connected to mongodb")
-        await populateFromAPI();
+        // await populateFromAPI();
+        // await populateArticlesFromTopics();
     } catch (error) {
         console.error("error:", error)
     }
 };
 
-export { connectDB, Topic };
+export { connectDB, Topic, User, Article };
