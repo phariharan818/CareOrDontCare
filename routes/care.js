@@ -101,14 +101,22 @@ router.get('/', async (req, res) => {
                             <p class="card-description">${article.description}</p>
                         </div>
                         <div class="toggle-container">
-                            <label class="switch">
-                                <input type="checkbox" checked> <!-- Default to checked -->
-                                <span class="slider round"></span>
-                            </label>
+                            <div class="toggle-content">
+                                <span class="dont-care-text">Don't Care</span>
+                                <!-- Add dataset attribute to store article ID -->
+                                <label class="switch" data-article-id="${article._id}">
+                                    <!-- Add onclick event to trigger toggleArticle function -->
+                                    <input type="checkbox" onclick="confirmDelete('${article._id}')" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="care-text">Care</span>
+                            </div>
                         </div>
                     </div>
                 `;
+
             }).join('');
+            
 
             // Read carepage.html and replace the placeholder with cared topics
             let carepageHTML = await fs.promises.readFile('public/carepage.html', 'utf-8');
@@ -116,12 +124,48 @@ router.get('/', async (req, res) => {
             res.send(carepageHTML);
         } else {
             // User not authenticated
-            res.json({ message: 'This page cannot be accessed if you are not logged in. Please log in to continue.' });
+            // res.json({ message: 'This page cannot be accessed if you are not logged in. Please log in to continue.' });
+            let loginHtml = await fs.promises.readFile('public/loginPrompt.html', 'utf-8');
+            res.send(loginHtml)
         }
     } catch (error) {
         console.error('Error fetching random topic:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+router.post('/updateArticleStatus', async (req, res) => {
+    try {
+        const { articleId, action } = req.body;
+        const user = await User.findOne({ name: req.session.account.username });
+
+        if (action === 'Not Cared') {
+            // Move article to the don't care list
+            await User.findOneAndUpdate({ name: req.session.account.username }, { $addToSet: { notCaredArticles: articleId } });
+        }
+        // Other actions like moving to cared list can be implemented similarly
+
+        res.status(200).send('Article status updated successfully');
+    } catch (error) {
+        console.error('Error updating article status:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+router.delete('/:articleId', async (req, res) => {
+    const articleId = req.params.articleId;
+    try {
+        const deletedArticle = await Article.findByIdAndDelete(articleId);
+        if (!deletedArticle) {
+            return res.status(404).json({ "status": "error", "message": "article not found" });
+        }
+        res.status(200).send('article removed successfully');
+    } catch (error) {
+        console.error('error removing article:', error);
+        res.status(500).send('internal server error');
+    }
+});
+
+
 
 export default router;
