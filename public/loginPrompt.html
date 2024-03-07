@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Required</title>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/prompt.css">
+</head>
+<body>
+    <div class="card">
+        <h1>Login Required</h1>
+        <p>This page cannot be accessed if you are not logged in. Please <a href="/signin">log in</a> to continue.</p>
+    </div>
+    <img src="https://images.seattletimes.com/wp-content/uploads/2018/03/dubs1.jpg?d=780x495" width="750" height="500">
+    <div class="countdown" id="countdown"></div>
+    <script>
+        let count = 5;
+        const countdownElement = document.getElementById('countdown');
+        countdownElement.textContent = 'Redirecting in ' + count + '...';
+
+        const countdownInterval = setInterval(() => {
+            count--;
+            countdownElement.textContent = 'Redirecting in ' + count + '...';
+            if (count === 0) {
+                clearInterval(countdownInterval);
+                window.location.href = '/';
+            }
+        }, 1000);
+    </script>     
+</body>
+</html>
