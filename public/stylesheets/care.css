@@ -58,6 +58,11 @@ body {
     color: #555;
 }
 
+.article-image {
+    max-width: 100%;
+    max-height: 200px;
+}
+
 .toggle-container {
     display: flex;
     align-items: center;

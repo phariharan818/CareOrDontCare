@@ -1,0 +1,46 @@
+body {
+  font-family: "Encode Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  background-color: #f7f7f7;
+}
+
+.navbar {
+  width: 100%;
+  margin-right: 2em;
+  justify-content: space-between;
+  background-color: #4b2e83;
+  padding: 1.5em;
+  z-index: 2000;
+}
+
+.navbar-links {
+  float: right;
+  display: flex;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
+
+h1 {
+  font-family: "Encode Sans", sans-serif;
+  padding-top: 1em;
+  color: #535353;
+}
+  
+
+#ChartContainer {
+    font-family: 'Encode Sans', sans-serif;
+}
