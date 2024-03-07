@@ -116,7 +116,39 @@ router.get('/', async (req, res) => {
             res.send(carepageHTML);
         } else {
             // User not authenticated
-            res.json({ message: 'This page cannot be accessed if you are not logged in. Please log in to continue.' });
+            // res.json({ message: 'This page cannot be accessed if you are not logged in. Please log in to continue.' });
+            const loginPromptHTML = `
+                <html>
+                <head>
+                    <title>Login Required</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap" rel="stylesheet">
+                    <style>
+                        body {
+                            font-family: "Encode Sans", sans-serif;
+                            text-align: center;
+                            padding-top: 50px;
+                        }
+                        h1 {
+                            color: #4b2e83;
+                        }
+                        p {
+                            color: #333;
+                        }
+                        a {
+                            color: #4b2e83;
+                        }
+                        a:hover {
+                            color: #6b4eaf;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Login Required</h1>
+                    <p>This page cannot be accessed if you are not logged in. Please <a href="/signin">log in</a> to continue.</p>
+                </body>
+                </html>
+            `;
+            res.send(loginPromptHTML);
         }
     } catch (error) {
         console.error('Error fetching random topic:', error);
