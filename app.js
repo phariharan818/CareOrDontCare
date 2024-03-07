@@ -13,7 +13,7 @@ const authConfig = {
         clientId: "37212b3b-f488-4b1a-b898-ef001135b7c9",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
         clientSecret: "2SI8Q~kfgkhXc3-h.21XS5dNGS6MpkP9KiexRb-c",
-        redirectUri: "http://localhost:3000/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
+        redirectUri: "https://careordontcare.onrender.com/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
     },
     system: {
         loggerOptions: {

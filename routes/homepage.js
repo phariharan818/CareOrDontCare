@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
                     },
                 }
             ]);
-
+            
             const dynamicContent = `
                 <script>
                     document.getElementById('topicHeading').innerText = '${escapeHTML(randomArticle[0]['title'])}';
