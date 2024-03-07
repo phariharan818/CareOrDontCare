@@ -61,12 +61,14 @@ h1 {
   padding: 1em;
   margin-top: 10px;
   font-size: 19px;
+  text-align: center;
 }
 
 .buttons-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .button {
@@ -76,7 +78,7 @@ h1 {
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  background-color: #4b2e83;
+  background-color: #32006e;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -85,4 +87,110 @@ h1 {
 .button:hover {
   background-color: #ccc;
   transform: scale(1.1);
+}
+
+.purpose-container {
+  width: 1200px;
+  /* height: 400px; */
+  background-color: #f7f7f7;
+  padding: 20px;
+  margin-top: 1em;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+.login-blurb {
+  background-color: #c5b4e3;
+  padding: 10px;
+  border: 2px solid #666;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+.purpose-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.purpose-description {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.comparison-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+  font-weight: bold;
+}
+
+.comparison-table .criteria {
+  width: 25%;
+}
+
+.comparison-table .separator {
+  border-top: 2px solid #ddd;
+}
+
+.example-article {
+  background-color: #f7f7f7;
+  margin-top: 20px;
+}
+
+.example-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+}
+
+.example-description {
+  font-size: 20px;
+  line-height: 1.5;
+}
+ 
+.arrow-container {
+  display: flex;
+  justify-content: center;
+}
+
+.arrow-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+  color: #212529;
+}
+
+.arrow-link:hover {
+  font-weight: bold;
+}
+
+.arrow-down {
+  font-size: 70px;
+}
+
+.arrow-down:hover {
+  color: #212529;
+  text-decoration: none;
 }

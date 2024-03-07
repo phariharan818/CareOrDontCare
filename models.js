@@ -9,6 +9,7 @@ const topicSchema = new mongoose.Schema({
     title: String,
     description: String,
     url: String,
+    urlToImage: String,
     cared: { type: Boolean, default: false }
 });
 
@@ -18,6 +19,7 @@ const articleSchema = new mongoose.Schema({
     title: String,
     description: String,
     url: String,
+    urlToImage: String,
     made: { type: Date, default: Date.now },
     archived: { type: Boolean, default: false }
 });
@@ -51,6 +53,7 @@ const populateArticlesFromTopics = async () => {
                     title: topic.title,
                     description: topic.description,
                     url: topic.url,
+                    urlToImage: topic.urlToImage
                 };
                 aTitles.push(topic.title);
                 return g;
@@ -93,7 +96,8 @@ const populateFromAPI = async () => {
             return {
                 title,
                 description: article.description,
-                url: article.url
+                url: article.url,
+                urlToImage: article.urlToImage
             };
         });
         
