@@ -95,9 +95,13 @@ router.get('/', async (req, res) => {
             const caredList = cared.map(article => {
                 return `
                     <div class="card">
-                        <img src="${article.urlToImage}" alt="Article Image" class="article-image">
+                        <a href="${article.url}" target="_blank">
+                            <img src="${article.urlToImage}" alt="Article Image" class="article-image">
+                        </a>
                         <div class="card-content">
-                            <h2 class="card-title">${article.title}</h2>
+                            <a href="${article.url}" target="_blank">
+                                <h2 class="card-title">${article.title}</h2>
+                            </a>
                             <p class="card-description">${article.description}</p>
                         </div>
                         <div class="toggle-container">
@@ -114,7 +118,6 @@ router.get('/', async (req, res) => {
                         </div>
                     </div>
                 `;
-
             }).join('');
             
 
