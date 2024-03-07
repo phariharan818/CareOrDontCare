@@ -31,6 +31,7 @@ import { connectDB, Topic } from './models.js';
 import indexRouter from './routes/homepage.js';
 import careRouter from './routes/care.js';
 import dontcareRouter from './routes/dontcare.js';
+import vizRouter from './routes/viz.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -62,6 +63,7 @@ app.use(authProvider.authenticate());
 app.use('/', indexRouter);
 app.use('/care', careRouter);
 app.use('/dontcare', dontcareRouter);
+app.use('/viz', vizRouter);
 
 app.get('/signin', (req, res, next) => {
 	return req.authContext.login({
@@ -75,6 +77,37 @@ app.get( '/signout', (req, res, next) => {
 		postLogoutRedirectUri: "/", // redirect here after logout
 	})
     (req, res, next);
+});
+
+app.get('/topCaredArticles', async (req, res) => {
+    try {
+        const topCaredArticles = await Article.aggregate([
+            {
+                $match: {
+                    cared: true
+                }
+            },
+            {
+                $group: {
+                    _id: '$title',
+                    clickCount: { $sum: 1 }
+                }
+            },
+            {
+                $sort: {
+                    clickCount: -1
+                }
+            },
+            {
+                $limit: 3
+            }
+        ]);
+
+        res.json(topCaredArticles);
+    } catch (error) {
+        console.error('Error fetching top cared articles:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 app.use(authProvider.interactionErrorHandler());
