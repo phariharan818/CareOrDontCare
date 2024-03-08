@@ -13,7 +13,7 @@ const authConfig = {
         clientId: "37212b3b-f488-4b1a-b898-ef001135b7c9",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
         clientSecret: "2SI8Q~kfgkhXc3-h.21XS5dNGS6MpkP9KiexRb-c",
-        redirectUri: "http://localhost:3000/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
+        redirectUri: "https://careordontcare.onrender.com/redirect" //"localhost:3000/redirect" or "https://care-or-dont-care.vercel.app/redirect"
     },
     system: {
         loggerOptions: {
@@ -31,6 +31,7 @@ import { connectDB, Topic } from './models.js';
 import indexRouter from './routes/homepage.js';
 import careRouter from './routes/care.js';
 import dontcareRouter from './routes/dontcare.js';
+import vizRouter from './routes/viz.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -62,6 +63,7 @@ app.use(authProvider.authenticate());
 app.use('/', indexRouter);
 app.use('/care', careRouter);
 app.use('/dontcare', dontcareRouter);
+app.use('/viz', vizRouter);
 
 app.get('/signin', (req, res, next) => {
 	return req.authContext.login({
@@ -77,10 +79,41 @@ app.get( '/signout', (req, res, next) => {
     (req, res, next);
 });
 
+app.get('/topCaredArticles', async (req, res) => {
+    try {
+        const topCaredArticles = await Article.aggregate([
+            {
+                $match: {
+                    cared: true
+                }
+            },
+            {
+                $group: {
+                    _id: '$title',
+                    clickCount: { $sum: 1 }
+                }
+            },
+            {
+                $sort: {
+                    clickCount: -1
+                }
+            },
+            {
+                $limit: 3
+            }
+        ]);
+
+        res.json(topCaredArticles);
+    } catch (error) {
+        console.error('Error fetching top cared articles:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.use(authProvider.interactionErrorHandler());
 
-app.listen(3000, () => {
-    console.log("Example app listening at http://localhost:3000")
-})
+// app.listen(3000, () => {
+//     console.log("Example app listening at http://localhost:3000")
+// })
 
 export default app;
