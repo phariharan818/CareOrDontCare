@@ -116,7 +116,7 @@ const connectDB = async () => {
         await mongoose.connect(process.env.MONGODB_URI)
         console.log("successfully connected to mongodb")
         // await populateFromAPI();
-        // await populateArticlesFromTopics();
+        await populateArticlesFromTopics();
     } catch (error) {
         console.error("error:", error)
     }
