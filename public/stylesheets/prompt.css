@@ -1,0 +1,30 @@
+body {
+    font-family: "Encode Sans", sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #4b2e83;
+}
+
+p {
+    color: #333;
+    font-size: 18px;
+}
+
+a {
+    color: #4b2e83;
+}
+
+img {
+    margin-bottom: 1em;
+}
+
+a:hover {
+    color: #6b4eaf;
+}
+
+.countdown {
+    font-size: 20px;
+    margin-bottom: 20px;
+}

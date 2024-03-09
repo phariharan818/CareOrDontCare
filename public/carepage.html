@@ -5,25 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Care Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/care.css">
 </head>
 <body>
 
-    <div class="navbar">
+    <nav class="navbar">
         <div class="navbar-links">
             <a href="/" class="navbar-link">Home</a>
             <a href="/care" class="navbar-link">Care</a>
-            <a href="#" class="navbar-link">Login</a>
+            <a href="/viz" class="navbar-link">Analytics</a>
+            <a href="/signin" class="navbar-link">Login</a>
+            <a href="/signout" class="navbar-link">Logout</a>
         </div>
-    </div>
+    </nav>
 
-    <h1>Care Page</h1>
+    <h1 style="margin-top: 1em; margin-bottom: 0; color: #333;">Care Page</h1>
+    <h3 style="font-weight: 400;">This page allows you to curate a personalized list of articles that interest you.</h3>
+    <div class="paragraph-container">
+        <p style="font-size: 18px; padding: 0.2em;">
+            When you come across an article you find compelling on the homepage, you can access them here once you click the <strong>"Care"</strong> button. 
+            You'll see a list of these cared-for articles displayed below with relevant links for you to read at any time you want. If you change your mind about an article, just click <strong>"Dont' Care"</strong> on the toggle, click yes when prompted to, and 
+            and it will be removed from your list. Don't worry, you can always refresh the page to see any changes reflected instantly. 
+            It's your own curated space for the articles that matter most to you!
+        </p>
+    </div>
+    
+    
+
+    <button id="refreshButton" onclick="location.reload()">Refresh</button>
 
     <div id="careContainer" class="card-container">
-        <!-- Care cards will be dynamically added here -->
+        <!-- cared_topics -->
     </div>
-
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <p class="modal-text">Are you sure you want to move this article to the "Don't Care" list?</p>
+            <div>
+                <button onclick="confirmDelete('${articleId}')" id="modalYesButton">Yes</button>
+                <button id="modalNoButton" onclick="location.reload()">No</button>
+            </div>
+        </div>
+    </div>
+    <script src="javascripts/client.js"></script>
 </body>
-<!-- <script src="javascripts/careChanges.js"></script>  -->
-<!-- add 2 function to index.js: move don't care and move care -->
 </html>
