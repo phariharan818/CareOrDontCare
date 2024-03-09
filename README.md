@@ -80,24 +80,27 @@ Represents individual users of our application, with attributes crucial for user
 
 #### Topic Entity:
 Represents different topics of interest within our application.
-- Attributes: TopicID, TopicName
-- Relationships: one-to-many relationship with the Article entity: Each topic can be associated with multiple articles.
+- **Attributes:** TopicID, TopicName
+- **Relationships:** one-to-many relationship with the Article entity: Each topic can be associated with multiple articles.
 
 #### Article Entity:
 Contains information about the articles present in our application, including their titles, links, and associated images.
-- Attributes: ArticleID, ArticleName, Link, Image
-- Relationships: many-to-one relationship with the Topic entity: Each article is linked to a single topic, but multiple articles can belong to the same topic.
+- **Attributes:** ArticleID, ArticleName, Link, Image
+- **Relationships:** many-to-one relationship with the Topic entity: Each article is linked to a single topic, but multiple articles can belong to the same topic.
 
 #### VisualizationData Entity:
 Stores visualization preferences for each user, enabling personalized user experiences.
-- Attributes: UserID, VisualizationPreferences
-- Relationships: one-to-one relationship with the User entity: Each user has a corresponding entry in the VisualizationData table.
+- **Attributes:** UserID, VisualizationPreferences
+- **Relationships:** one-to-one relationship with the User entity: Each user has a corresponding entry in the VisualizationData table.
+
+[ERD.pdf](https://github.com/phariharan818/CareOrDontCare/files/14544366/ERD.pdf)
 
 ### Use Case Sequence Diagram:
-[Insert Use Case Sequence Diagram here]
+[Use Sequence Diagram.pdf](https://github.com/phariharan818/CareOrDontCare/files/14544424/Use.Sequence.Diagram.pdf)
+
 
 ### High Level Component Diagram:
-[Insert High Level Component Diagram here]
+[Component Diagram.pdf](https://github.com/phariharan818/CareOrDontCare/files/14544435/Component.Diagram.pdf)
 
 ## Non-Functional Requirements
 
