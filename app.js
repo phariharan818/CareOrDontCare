@@ -26,7 +26,8 @@ const authConfig = {
     }
 };
 
-import { connectDB, Topic } from './models.js';
+import {connectDB, Topic, User, Article } from './models.js';
+const router = express.Router();
 
 import indexRouter from './routes/homepage.js';
 import careRouter from './routes/care.js';
@@ -79,8 +80,9 @@ app.get( '/signout', (req, res, next) => {
     (req, res, next);
 });
 
-app.get('/topCaredArticles', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
+        // Fetch top cared articles
         const topCaredArticles = await Article.aggregate([
             {
                 $match: {
@@ -97,15 +99,13 @@ app.get('/topCaredArticles', async (req, res) => {
                 $sort: {
                     clickCount: -1
                 }
-            },
-            {
-                $limit: 3
             }
         ]);
 
-        res.json(topCaredArticles);
+        res.render('viz', { topCaredArticles });
     } catch (error) {
         console.error('Error fetching top cared articles:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
