@@ -80,3 +80,30 @@ document.getElementById('dontCareButton').onclick = function() {
 //         console.error('Error fetching topic and description:', error);
 //     }
 // }
+
+
+import { updateChartData } from './chart';
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/auth');
+        const data = await response.json();
+        const loginBlurb = document.getElementById('loginBlurb');
+
+        if (data.authenticated) {
+            loginBlurb.style.display = 'none';
+
+            // Fetch and update the chart data when the user is authenticated
+            fetch('/care/topCaredArticles')
+                .then(response => response.json())
+                .then(data => {
+                    const titles = data.map(article => article._id);
+                    const clicks = data.map(article => article.clickCount);
+                    updateChartData(titles, clicks);
+                })
+                .catch(error => console.error('Error fetching top cared articles:', error));
+        }
+    } catch (error) {
+        console.error('Error checking authentication status:', error);
+    }
+});

@@ -106,7 +106,6 @@ app.get('/topCaredArticles', async (req, res) => {
         res.json(topCaredArticles);
     } catch (error) {
         console.error('Error fetching top cared articles:', error);
-        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

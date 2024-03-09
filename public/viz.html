@@ -6,7 +6,7 @@
     <title>Care or Don't Care</title>
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheets/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -18,9 +18,10 @@
         </div>
     </nav>
     <h1>User's Top 3 Articles Based On Clicks</h1>
-    <canvas id="ChartContainer" style="width:100%;max-width:700px; background-color: #b7a57a; padding: 0.5em"></canvas>
-    <!-- Chart gets added here dynamically-->
-    <script>
+    <canvas id="myChart"></canvas>
+    <!-- <canvas id="ChartContainer" style="width:100%;max-width:700px; background-color: #b7a57a; padding: 0.5em"></canvas>
+    Chart gets added here dynamically-->
+    <!-- <script>
         const xValues = ["Rihanna Performs First Full Concert in 8 Years", "M3 MacBook Air benchmarks match base MacBook Pro, as expected", "NASA Collects First Surface Science in Decades via Commercial Moon Mission"];
         const yValues = [49, 42, 12];
         const barColors = "#4b2e83";
@@ -51,8 +52,8 @@
             }
           }
         });
-    </script>
+    </script> -->
 
-    <!-- <script src="javascripts/chart.js"></script> -->
+    <script src="javascripts/chart.js"></script>
 </body>
 </html>
