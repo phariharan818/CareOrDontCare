@@ -88,10 +88,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('/auth');
         const data = await response.json();
-        const loginBlurb = document.getElementById('loginBlurb');
 
         if (data.authenticated) {
-            loginBlurb.style.display = 'none';
 
             // Fetch and update the chart data when the user is authenticated
             fetch('/care/topCaredArticles')
@@ -107,3 +105,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error checking authentication status:', error);
     }
 });
+
+// function handleCardClick(event) {
+//     const clickedElement = event.target;
+
+//     // Check if the clicked element has class from care html
+//     if (clickedElement.classList.contains('card-container')) {
+//         const articleTitle = clickedElement.querySelector('.article-title').textContent;
+//         trackArticleClick(articleTitle);
+//     }
+// }
+
+// const cardContainer = document.getElementById('careContainer');
+// cardContainer.addEventListener('click', handleCardClick);

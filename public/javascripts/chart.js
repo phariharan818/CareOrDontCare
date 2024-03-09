@@ -66,8 +66,6 @@
 
 
 let clicksData = [10, 10, 10];
-
-// Get the canvas context
 const myChart = document.getElementById('myChart').getContext('2d');
 
 // Create the initial chart
