@@ -90,8 +90,9 @@ router.get('/', async (req, res) => {
                 userIn = await User.create({ name: req.session.account.username });
             }
 
+            // All the other articles must have been deleted lmao
             const cared = await Article.find({ _id: { $in: userIn['caredArticles'] } });
-
+            
             const caredList = cared.map(article => {
                 return `
                     <div class="card">
@@ -157,8 +158,9 @@ router.post('/updateArticleStatus', async (req, res) => {
 
 router.delete('/:articleId', async (req, res) => {
     const articleId = req.params.articleId;
-    try {
-        const deletedArticle = await Article.findByIdAndDelete(articleId);
+    try { /// this is just deleting the article from the database??
+        // const deletedArticle = await Article.findByIdAndDelete(articleId);
+        console.log(articleId)
         if (!deletedArticle) {
             return res.status(404).json({ "status": "error", "message": "article not found" });
         }
