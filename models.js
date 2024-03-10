@@ -65,21 +65,6 @@ const populateArticlesFromTopics = async () => {
     } catch (error) {
         console.error("error:", error);
     }
-    // try {
-    //     const a = await Article.find({});
-    //     const articles = a.map(topic => { // re-set the 3 fields that match, leaving archived as false.
-    //         const g = {
-    //             title: topic.title,
-    //             description: topic.description,
-    //             url: topic.url,
-    //         };
-    //         return g;
-    //     });
-    //     await Article.insertMany(articles); // save the articles to the database
-    //     console.log("articles populated from topics successfully");
-    // } catch (error) {
-    //     console.error("error:", error);
-    // }
 };
 
 const populateFromAPI = async () => {

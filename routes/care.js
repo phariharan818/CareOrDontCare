@@ -89,12 +89,11 @@ router.get('/', async (req, res) => {
                 console.log('User not in database, adding them');
                 userIn = await User.create({ name: req.session.account.username });
             }
-
             const cared = await Article.find({ _id: { $in: userIn['caredArticles'] } });
-
+            
             const caredList = cared.map(article => {
                 return `
-                    <div class="card">
+                    <div class="card" id=${article._id}>
                         <a href="${article.url}" target="_blank">
                             <img src="${article.urlToImage}" alt="Article Image" class="article-image">
                         </a>
@@ -137,35 +136,32 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/updateArticleStatus', async (req, res) => {
-    try {
-        const { articleId, action } = req.body;
-        const user = await User.findOne({ name: req.session.account.username });
-
-        if (action === 'Not Cared') {
-            // Move article to the don't care list
-            await User.findOneAndUpdate({ name: req.session.account.username }, { $addToSet: { notCaredArticles: articleId } });
-        }
-        // Other actions like moving to cared list can be implemented similarly
-
-        res.status(200).send('Article status updated successfully');
-    } catch (error) {
-        console.error('Error updating article status:', error);
-        res.status(500).send('Internal server error');
-    }
-});
-
 router.delete('/:articleId', async (req, res) => {
+    // Things assumed when this route is called:
+    // The user is signed in and authenticated
+    // The article id is in one of the user's lists
+
     const articleId = req.params.articleId;
     try {
-        const deletedArticle = await Article.findByIdAndDelete(articleId);
-        if (!deletedArticle) {
-            return res.status(404).json({ "status": "error", "message": "article not found" });
+        // Load all the user's cared topics
+        let userIn = await User.findOne({ name: req.session.account.username });
+        if (!userIn) {
+            console.log('User not in database, adding them');
+            userIn = await User.create({ name: req.session.account.username });
         }
-        res.status(200).send('article removed successfully');
+        // if the user already cares about the article, remove it from that list and add it to the don't care list
+        if (userIn.caredArticles.includes(articleId)){
+            await User.findOneAndUpdate({name: req.session.account.username}, {$pull: {caredArticles: articleId}}); 
+            await User.findOneAndUpdate({name: req.session.account.username}, {$push: {notCaredArticles: articleId}});
+        } else {
+            await User.findOneAndUpdate({name: req.session.account.username}, {$pull: {notCaredArticles: articleId}}); 
+            await User.findOneAndUpdate({name: req.session.account.username}, {$push: {caredArticles: articleId}});
+        }
+        // console.log('articleId:', articleId, ' in cared? ', userIn.caredArticles, 'or don\'t care:', userIn.notCaredArticles);
+        res.status(200).send('article swapped successfully');
     } catch (error) {
-        console.error('error removing article:', error);
-        res.status(500).send('internal server error');
+        console.error('Error updating article:', error);
+        res.status(500).send('Internal server error');
     }
 });
 
