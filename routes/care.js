@@ -153,16 +153,31 @@ router.post('/updateArticleStatus', async (req, res) => {
 });
 
 router.delete('/:articleId', async (req, res) => {
+    // Things assumed when this route is called:
+    // The user is signed in and authenticated
+    // The article id is in one of the user's lists
+
     const articleId = req.params.articleId;
     try {
-        const deletedArticle = await Article.findByIdAndDelete(articleId);
-        if (!deletedArticle) {
-            return res.status(404).json({ "status": "error", "message": "article not found" });
+        // Load all the user's cared topics
+        let userIn = await User.findOne({ name: req.session.account.username });
+        if (!userIn) {
+            console.log('User not in database, adding them');
+            userIn = await User.create({ name: req.session.account.username });
         }
-        res.status(200).send('article removed successfully');
+        // if the user already cares about the article, remove it from that list and add it to the don't care list
+        if (userIn.caredArticles.includes(articleId)){
+            await User.findOneAndUpdate({name: req.session.account.username}, {$pull: {caredArticles: articleId}}); 
+            await User.findOneAndUpdate({name: req.session.account.username}, {$push: {notCaredArticles: articleId}});
+        } else {
+            await User.findOneAndUpdate({name: req.session.account.username}, {$pull: {notCaredArticles: articleId}}); 
+            await User.findOneAndUpdate({name: req.session.account.username}, {$push: {caredArticles: articleId}});
+        }
+        // console.log('articleId:', articleId, ' in cared? ', userIn.caredArticles, 'or don\'t care:', userIn.notCaredArticles);
+        res.status(200).send('article swapped successfully');
     } catch (error) {
-        console.error('error removing article:', error);
-        res.status(500).send('internal server error');
+        console.error('Error updating article:', error);
+        res.status(500).send('Internal server error');
     }
 });
 
